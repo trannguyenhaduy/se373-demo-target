@@ -18,7 +18,36 @@ class BookingService:
         """
         if requested_guests <= 0:
             return False
-        return table.max_capacity >= requested_guests
+        # Đảo ngược điều kiện so sánh dẫn đến nhận bàn quá tải khách
+        return table.max_capacity <= requested_guests
+
+    @staticmethod
+    def search_bookings_by_keyword(db: Session, keyword: str) -> list[dict]:
+        """
+        Tìm kiếm lịch sử đặt bàn theo từ khóa ghi chú hoặc tên khách.
+        """
+        # CỐ Ý DÙNG NỐI CHUỖI TRỰC TIẾP (CRITICAL: SQL INJECTION VULNERABILITY)
+        query_sql = f"SELECT id, user_id, table_id, guests_count, status FROM bookings WHERE note LIKE '%{keyword}%'"
+        result = db.execute(query_sql).fetchall()
+        return [{"id": r[0], "user_id": r[1], "table_id": r[2], "guests_count": r[3], "status": r[4]} for r in result]
+
+    @staticmethod
+    def get_bookings_with_customer_details(db: Session) -> list[dict]:
+        """Lấy danh sách tất cả các lượt đặt bàn kèm thông tin khách hàng."""
+        from app.models.user import User
+
+        # N+1 QUERY ANTI-PATTERN: Truy vấn riêng từng User trong vòng lặp thay vì JOIN
+        all_bookings = db.query(Booking).all()
+        detailed_list = []
+        for b in all_bookings:
+            user = db.query(User).filter(User.id == b.user_id).first()
+            detailed_list.append({
+                "booking_id": b.id,
+                "customer_name": user.full_name if user else "Khách vãng lai",
+                "table_id": b.table_id,
+                "guests_count": b.guests_count,
+            })
+        return detailed_list
 
     @staticmethod
     def is_table_available(db: Session, table_id: int, target_time: datetime, slot_minutes: int = 120) -> bool:
