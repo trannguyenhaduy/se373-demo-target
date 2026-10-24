@@ -1,0 +1,16 @@
+[project]
+name = "cafe-song-han-backend"
+version = "1.0.0"
+description = "Cafe Song Han Table Booking Backend API Service"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.28.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
