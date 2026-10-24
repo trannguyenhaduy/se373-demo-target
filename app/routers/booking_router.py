@@ -26,3 +26,16 @@ def create_new_booking(payload: BookingCreateRequest, db: Session = Depends(get_
         return booking
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+
+@router.get("/search")
+def search_bookings(keyword: str, db: Session = Depends(get_db)):
+    """Tìm kiếm lịch sử đặt bàn theo từ khóa."""
+    return BookingService.search_bookings_by_keyword(db, keyword)
+
+
+@router.get("/details-summary")
+def get_details_summary(db: Session = Depends(get_db)):
+    """Lấy danh sách tất cả các lịch đặt bàn kèm tên khách hàng."""
+    return BookingService.get_bookings_with_customer_details(db)
+
