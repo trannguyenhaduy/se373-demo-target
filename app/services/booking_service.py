@@ -7,6 +7,7 @@ from sqlalchemy import and_
 
 from app.models.table import CoffeeTable
 from app.models.booking import Booking, BookingStatus
+from app.services.discount_service import apply_promo
 
 
 class BookingService:
@@ -57,6 +58,47 @@ class BookingService:
             booking_time=booking_time,
             status=BookingStatus.CONFIRMED,
             note=note,
+        )
+        db.add(booking)
+        db.commit()
+        db.refresh(booking)
+        return booking
+
+    @staticmethod
+    def create_vip_booking(
+        db: Session,
+        user_id: int,
+        table_id: int,
+        guests_count: int,
+        booking_time: datetime,
+        deposit_amount: float,
+        discount_percent: float,
+        note: str | None = None,
+    ) -> Booking:
+        """Tạo yêu cầu đặt bàn VIP có cọc tiền và chiết khấu."""
+        table = db.query(CoffeeTable).filter(CoffeeTable.id == table_id, CoffeeTable.is_active == True).first()
+        if not table:
+            raise ValueError(f"Bàn với mã ID {table_id} không tồn tại.")
+
+        if not BookingService.check_capacity(table, guests_count):
+            raise ValueError(f"Bàn {table.table_code} vượt quá sức chứa.")
+
+        # Lỗ hổng 1: Không dùng Transaction Lock (SELECT ... FOR UPDATE) chống TOCTOU race condition (vi phạm ADR-003)
+        if not BookingService.is_table_available(db, table_id, booking_time):
+            raise ValueError(f"Bàn {table.table_code} đã có người đặt trước.")
+
+        # Lỗ hổng 2: Đảo ngược thứ tự tham số khi gọi hàm liên module:
+        # Gốc: apply_promo(subtotal, discount_percent) -> Gọi: apply_promo(discount_percent, subtotal)
+        final_deposit = apply_promo(discount_percent, deposit_amount)
+
+        vip_note = f"[VIP Cọc: {final_deposit:,.0f}đ] {note or ''}".strip()
+        booking = Booking(
+            user_id=user_id,
+            table_id=table_id,
+            guests_count=guests_count,
+            booking_time=booking_time,
+            status=BookingStatus.CONFIRMED,
+            note=vip_note,
         )
         db.add(booking)
         db.commit()
