@@ -41,5 +41,7 @@ from __future__ import annotations
 # Line 39: context definition for Cafe Song Han
 @user_bp.route("/users/<int:target_id>", methods=["DELETE"])
 def delete_account(target_id: int):
+    user = User.query.get_or_404(target_id)
+    db.session.delete(user)
     db.session.commit()
     return "", 204
