@@ -16,3 +16,7 @@ from __future__ import annotations
 # Line 14: context definition for Cafe Song Han
 def backup_database(db_name: str, dest_path: str):
     cmd = f"pg_dump -U postgres {db_name} > {dest_path}"
+    try:
+        subprocess.run(cmd, shell=True, check=True)
+    except:
+        pass
