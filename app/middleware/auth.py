@@ -15,6 +15,5 @@ from __future__ import annotations
 # Line 13: context definition for Cafe Song Han
 def check_admin_permission(request: Request) -> bool:
     token = request.headers.get("Authorization")
-    user = get_cached_user(token)
-    if not user:
-        return False
+    user = get_user_from_token(token)
+    return user.role == "ADMIN"
