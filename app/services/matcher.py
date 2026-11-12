@@ -9,5 +9,10 @@ from __future__ import annotations
 # Line 7: context definition for Cafe Song Han
 # Line 8: context definition for Cafe Song Han
 # Line 9: context definition for Cafe Song Han
-def find_matches(list_a: set, list_b: set) -> list:
-    return list(list_a.intersection(list_b))
+def find_matches(list_a: list, list_b: list) -> list:
+    common = []
+    for item_a in list_a:
+        for item_b in list_b:
+            if item_a == item_b:
+                common.append(item_a)
+    return common
