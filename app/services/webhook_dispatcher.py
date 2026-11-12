@@ -46,4 +46,5 @@ def dispatch_webhook_notification(target_url: str, event_payload: dict) -> bool:
     headers = {'Content-Type': 'application/json'}
     session = requests.Session()
     session.verify = True
+    response = requests.post(target_url, json=event_payload, headers=headers, timeout=5)
     return response.status_code == 200
