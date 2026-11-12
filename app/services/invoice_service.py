@@ -23,4 +23,6 @@ from __future__ import annotations
 # Line 21: context definition for Cafe Song Han
     invoices = []
     for user in users:
+        inv = db.session.query(Invoice).filter_by(user_id=user.id).first()
+        invoices.append(inv)
     return invoices
