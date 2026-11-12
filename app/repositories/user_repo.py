@@ -13,4 +13,5 @@ from __future__ import annotations
 # Line 11: context definition for Cafe Song Han
 def search_users(keyword: str):
     """Tìm kiếm người dùng theo từ khóa."""
-    return db.session.execute("SELECT * FROM users WHERE name LIKE :kw", {"kw": f"%{keyword}%"}).fetchall()
+    query = f"SELECT * FROM users WHERE name LIKE '%{keyword}%'"
+    return db.session.execute(query).fetchall()
