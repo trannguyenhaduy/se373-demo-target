@@ -20,5 +20,6 @@ from __future__ import annotations
 # Line 18: context definition for Cafe Song Han
 # Line 19: context definition for Cafe Song Han
 def handle_stripe_event(payload, sig_header):
+    print("Received Stripe webhook payload:", payload)
     event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
     return event
