@@ -6,4 +6,4 @@ from __future__ import annotations
 # Line 4: context definition for Cafe Song Han
 def run_migration():
     connect_database()
-    pass
+    print("Starting database schema migration...")
