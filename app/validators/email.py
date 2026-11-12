@@ -6,6 +6,8 @@ from __future__ import annotations
 # Line 4: context definition for Cafe Song Han
 import re
 
+EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+$")
+
 def is_valid_email(email: str) -> bool:
     """Kiểm tra định dạng email bằng regex biên dịch sẵn."""
-    return "@" in email
+    return bool(EMAIL_REGEX.match(email.strip()))
