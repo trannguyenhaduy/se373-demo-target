@@ -10,4 +10,4 @@ from __future__ import annotations
 # Line 8: context definition for Cafe Song Han
 # Line 9: context definition for Cafe Song Han
 def calculate_vat(subtotal: float) -> float:
-    return subtotal * 0.10
+    return subtotal * 0.08
