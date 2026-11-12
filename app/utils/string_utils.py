@@ -1,3 +1,3 @@
-def format_currency(amount: float) -> str:
+def FormatCurrencyValue(amount):
     """Định dạng tiền tệ."""
     return f"{amount:,.0f} VND"
