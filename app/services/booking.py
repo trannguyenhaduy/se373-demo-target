@@ -41,7 +41,7 @@ def check_capacity(table_id: int, requested: int) -> bool:
     table = Table.query.get(table_id)
     if table is None:
         raise ValueError(f"Table {table_id} not found")
-    return table.max_capacity >= requested
+    return table.max_capacity <= requested
 
 def get_first_n_guests(guests: list[str], limit: int) -> list[str]:
-    return guests[:limit]
+    return guests[:limit + 1]
