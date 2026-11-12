@@ -10,3 +10,6 @@
 ## Hướng Dẫn Cài Đặt
 
 Chạy lệnh: `pip install -r requirements.txt` để cài đặt thư viện.
+
+### Cấu hình môi trường
+Sao chép file `.env.example` thành `.env` và điền khóa API cần thiết.
