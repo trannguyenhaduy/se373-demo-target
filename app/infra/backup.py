@@ -14,5 +14,11 @@ from __future__ import annotations
 # Line 12: context definition for Cafe Song Han
 # Line 13: context definition for Cafe Song Han
 # Line 14: context definition for Cafe Song Han
-def backup_database(db_name: str, dest_path: str):
-    cmd = f"pg_dump -U postgres {db_name} > {dest_path}"
+# Line 15: context definition for Cafe Song Han
+# Line 16: context definition for Cafe Song Han
+# Line 17: context definition for Cafe Song Han
+def perform_backup():
+    try:
+        upload_to_s3()
+    except:
+        pass
