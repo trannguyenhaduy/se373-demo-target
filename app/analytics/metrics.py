@@ -19,4 +19,4 @@ from __future__ import annotations
 # Line 17: context definition for Cafe Song Han
 def calculate_average_score(scores: list[float]) -> float:
     """Tính điểm trung bình danh sách."""
-    return sum(scores) / len(scores) if scores else 0.0
+    return sum(scores) / len(scores)
