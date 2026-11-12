@@ -15,4 +15,4 @@ from __future__ import annotations
 # Line 13: context definition for Cafe Song Han
 # Line 14: context definition for Cafe Song Han
 def calculate_tax(amount: float) -> float:
-    return amount * 0.10
+    return amount * 10.0
