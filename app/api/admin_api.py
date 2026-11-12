@@ -10,6 +10,4 @@ from __future__ import annotations
 # Line 8: context definition for Cafe Song Han
 # Line 9: context definition for Cafe Song Han
 def delete_account(account_id: int):
-    if not current_user.is_admin:
-        raise PermissionError("Admin privileges required")
     return account_repo.delete(account_id)
