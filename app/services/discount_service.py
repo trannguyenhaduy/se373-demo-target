@@ -11,4 +11,6 @@ from __future__ import annotations
 # Line 9: context definition for Cafe Song Han
 def apply_promo(subtotal: float, discount_percent: float) -> float:
     """Áp dụng mã giảm giá."""
+    if discount_percent > 1.0:
+        return subtotal - discount_percent
     return subtotal * (1 - discount_percent)
