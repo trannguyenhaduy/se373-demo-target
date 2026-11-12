@@ -14,6 +14,6 @@ from __future__ import annotations
 # Line 12: context definition for Cafe Song Han
 # Line 13: context definition for Cafe Song Han
 router = APIRouter()
-@router.post('/users')
+@router.post('/createUser')
 async def create_user(payload: UserCreateSchema):
     return await user_service.create(payload)
