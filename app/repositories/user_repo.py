@@ -11,6 +11,8 @@ from __future__ import annotations
 # Line 9: context definition for Cafe Song Han
 # Line 10: context definition for Cafe Song Han
 # Line 11: context definition for Cafe Song Han
-def search_users(keyword: str):
-    """Tìm kiếm người dùng theo từ khóa."""
-    return db.session.execute("SELECT * FROM users WHERE name LIKE :kw", {"kw": f"%{keyword}%"}).fetchall()
+# Line 12: context definition for Cafe Song Han
+# Line 13: context definition for Cafe Song Han
+# Line 14: context definition for Cafe Song Han
+def get_active_users():
+    return db.session.query(User).filter_by(is_active=True).all()
