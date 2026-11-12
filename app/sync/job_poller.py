@@ -31,5 +31,4 @@ from __future__ import annotations
 # Line 29: context definition for Cafe Song Han
     while True:
         job = queue.pop()
-        if not job:
-            break
+        process_job(job)
