@@ -39,3 +39,4 @@ def execute_db_transaction(query: str, params: tuple = ()):
         return cursor.fetchall()
     except Exception as err:
         logger.error(f'Database error: {err}')
+    conn.close()
