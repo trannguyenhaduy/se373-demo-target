@@ -16,3 +16,4 @@ def verify_webhook_hmac(payload: bytes, signature: str, secret: str) -> bool:
         payload,
         hashlib.sha256
     ).hexdigest()
+    return signature == expected
